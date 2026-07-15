@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializeScrollIndicator();
 
+    const yearEl = document.getElementById("current-year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
 });
 
 /* ==========================================================
@@ -377,19 +380,30 @@ function initializeContactForm() {
 
     if (!form) return;
 
-    form.addEventListener("submit", e => {
+    const messageBox = document.getElementById("form-message");
+    const submitBtn = form.querySelector("button[type='submit']");
+    const btnText = submitBtn ? submitBtn.querySelector(".btn-text") : null;
+
+    function showMessage(text, type) {
+
+        if (!messageBox) return;
+
+        messageBox.textContent = text;
+        messageBox.className = "form-message show " + type;
+
+    }
+
+    form.addEventListener("submit", async e => {
 
         e.preventDefault();
 
-        const inputs = form.querySelectorAll(
-
-            "input,textarea"
-
+        const requiredFields = form.querySelectorAll(
+            "input[required], textarea[required]"
         );
 
         let valid = true;
 
-        inputs.forEach(input => {
+        requiredFields.forEach(input => {
 
             if (input.value.trim() === "") {
 
@@ -399,21 +413,58 @@ function initializeContactForm() {
 
             } else {
 
-                input.style.borderColor = "#00e5ff";
+                input.style.borderColor = "rgba(255,255,255,.08)";
 
             }
 
         });
 
-        if (valid) {
+        if (!valid) {
 
-            alert(
+            showMessage("Please fill in all required fields.", "error");
 
-                "Thank you! Your message has been received."
+            return;
 
-            );
+        }
 
-            form.reset();
+        if (submitBtn) submitBtn.disabled = true;
+        if (btnText) btnText.textContent = "Sending...";
+
+        try {
+
+            const formData = new FormData(form);
+
+            const response = await fetch(form.action, {
+
+                method: "POST",
+                body: formData,
+                headers: { "Accept": "application/json" }
+
+            });
+
+            if (response.ok) {
+
+                showMessage(
+                    "Thank you! Your message has been sent successfully. I'll get back to you soon.",
+                    "success"
+                );
+
+                form.reset();
+
+            } else {
+
+                showMessage("Something went wrong. Please try again later.", "error");
+
+            }
+
+        } catch (err) {
+
+            showMessage("Something went wrong. Please try again later.", "error");
+
+        } finally {
+
+            if (submitBtn) submitBtn.disabled = false;
+            if (btnText) btnText.textContent = "Send Message";
 
         }
 
