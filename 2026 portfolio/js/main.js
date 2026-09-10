@@ -259,180 +259,6 @@ const PROJECTS = [
 
 ];
 
-/* ==========================================================
-   MOCKUP SCREEN MARKUP GENERATORS
-========================================================== */
-
-const MOCK_ACCENT = "#38d9ff";
-const MOCK_PRIMARY = "#2f6fed";
-const MOCK_SECONDARY = "#1b3a8a";
-const MOCK_PANEL = "#0f2557";
-const MOCK_LINE = "rgba(255,255,255,.14)";
-const MOCK_MUTED = "#7f8bb3";
-const MOCK_WHITE = "#f4f7ff";
-
-function mockupMarkup(type) {
-
-    switch (type) {
-
-        case "library":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <rect x="4" y="4" width="192" height="26" rx="8" fill="${MOCK_PANEL}" stroke="${MOCK_LINE}"/>
-                <circle cx="20" cy="17" r="5" fill="none" stroke="${MOCK_ACCENT}" stroke-width="2"/>
-                <line x1="24" y1="21" x2="28" y2="25" stroke="${MOCK_ACCENT}" stroke-width="2" stroke-linecap="round"/>
-                <rect x="40" y="13" width="90" height="8" rx="4" fill="${MOCK_LINE}"/>
-                ${[0,1,2,3].map(i => `
-                    <g transform="translate(4 ${42 + i*38})">
-                        <rect width="192" height="32" rx="8" fill="${MOCK_PANEL}" opacity="${0.7 - i*0.07}"/>
-                        <rect x="10" y="6" width="14" height="20" rx="2" fill="${i % 2 ? MOCK_ACCENT : MOCK_PRIMARY}"/>
-                        <rect x="34" y="9" width="90" height="7" rx="3.5" fill="${MOCK_LINE}"/>
-                        <rect x="34" y="20" width="60" height="6" rx="3" fill="${MOCK_LINE}" opacity=".6"/>
-                        <rect x="150" y="10" width="32" height="12" rx="6" fill="${i % 2 ? "rgba(56,217,255,.18)" : "rgba(255,255,255,.08)"}"/>
-                    </g>`).join("")}
-                <rect x="4" y="188" width="192" height="28" rx="10" fill="url(#gradLib)"/>
-                <defs>
-                    <linearGradient id="gradLib" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0" stop-color="${MOCK_PRIMARY}"/>
-                        <stop offset="1" stop-color="${MOCK_SECONDARY}"/>
-                    </linearGradient>
-                </defs>
-            </svg>`;
-
-        case "calc":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <rect x="4" y="4" width="192" height="54" rx="10" fill="${MOCK_PANEL}"/>
-                <text x="182" y="30" text-anchor="end" fill="${MOCK_MUTED}" font-size="10" font-family="monospace">sin(45)+log(2)</text>
-                <text x="182" y="50" text-anchor="end" fill="${MOCK_WHITE}" font-size="18" font-family="monospace">245.71</text>
-                ${Array.from({ length: 16 }).map((_, i) => {
-                    const col = i % 4, row = Math.floor(i / 4);
-                    const isOp = col === 3;
-                    const isEquals = i === 15;
-                    return `<rect x="${4 + col * 49}" y="${66 + row * 39}" width="42" height="32" rx="8"
-                        fill="${isEquals ? "url(#gradCalc)" : isOp ? "rgba(56,217,255,.16)" : "rgba(255,255,255,.06)"}"
-                        stroke="${isOp ? "rgba(56,217,255,.35)" : MOCK_LINE}"/>`;
-                }).join("")}
-                <defs>
-                    <linearGradient id="gradCalc" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stop-color="${MOCK_PRIMARY}"/>
-                        <stop offset="1" stop-color="${MOCK_SECONDARY}"/>
-                    </linearGradient>
-                </defs>
-            </svg>`;
-
-        case "ecom":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <rect x="4" y="4" width="150" height="24" rx="12" fill="${MOCK_PANEL}"/>
-                <circle cx="176" cy="16" r="14" fill="rgba(56,217,255,.16)" stroke="${MOCK_ACCENT}"/>
-                <text x="176" y="20" text-anchor="middle" fill="${MOCK_ACCENT}" font-size="11" font-family="sans-serif">3</text>
-                ${[0,1,2,3].map(i => {
-                    const col = i % 2, row = Math.floor(i / 2);
-                    return `
-                    <g transform="translate(${4 + col*98} ${40 + row*88})">
-                        <rect width="92" height="60" rx="10" fill="${MOCK_PANEL}"/>
-                        <rect x="10" y="10" width="72" height="30" rx="6" fill="${col ? "rgba(56,217,255,.18)" : "rgba(47,111,237,.22)"}"/>
-                        <rect x="10" y="46" width="46" height="7" rx="3.5" fill="${MOCK_LINE}"/>
-                        <text x="82" y="52" text-anchor="end" fill="${MOCK_ACCENT}" font-size="9" font-family="sans-serif">P${250 + i*40}</text>
-                    </g>`;
-                }).join("")}
-                <rect x="4" y="188" width="192" height="28" rx="10" fill="url(#gradEcom)"/>
-                <defs>
-                    <linearGradient id="gradEcom" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0" stop-color="${MOCK_PRIMARY}"/>
-                        <stop offset="1" stop-color="${MOCK_SECONDARY}"/>
-                    </linearGradient>
-                </defs>
-            </svg>`;
-
-        case "atm":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <rect x="60" y="4" width="80" height="10" rx="4" fill="${MOCK_LINE}"/>
-                <rect x="4" y="26" width="192" height="52" rx="10" fill="${MOCK_PANEL}"/>
-                <text x="100" y="48" text-anchor="middle" fill="${MOCK_MUTED}" font-size="10" font-family="sans-serif">ENTER PIN</text>
-                ${[0,1,2,3].map(i => `<circle cx="${76 + i*16}" cy="64" r="5" fill="${i < 3 ? MOCK_ACCENT : "rgba(255,255,255,.15)"}"/>`).join("")}
-                ${Array.from({ length: 12 }).map((_, i) => {
-                    const col = i % 3, row = Math.floor(i / 3);
-                    const label = i < 9 ? String(i + 1) : (i === 9 ? "*" : i === 10 ? "0" : "#");
-                    return `
-                    <g transform="translate(${8 + col*63} ${90 + row*32})">
-                        <rect width="55" height="26" rx="7" fill="rgba(255,255,255,.06)" stroke="${MOCK_LINE}"/>
-                        <text x="27" y="17" text-anchor="middle" fill="${MOCK_WHITE}" font-size="11" font-family="monospace">${label}</text>
-                    </g>`;
-                }).join("")}
-                <rect x="4" y="196" width="192" height="20" rx="8" fill="url(#gradAtm)"/>
-                <defs>
-                    <linearGradient id="gradAtm" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0" stop-color="${MOCK_PRIMARY}"/>
-                        <stop offset="1" stop-color="${MOCK_SECONDARY}"/>
-                    </linearGradient>
-                </defs>
-            </svg>`;
-
-        case "captcha":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <rect x="10" y="60" width="180" height="52" rx="10" fill="${MOCK_PANEL}" stroke="${MOCK_LINE}"/>
-                <rect x="24" y="76" width="20" height="20" rx="5" fill="rgba(56,217,255,.15)" stroke="${MOCK_ACCENT}" stroke-width="2"/>
-                <path d="M28 86l4 4 8-8" fill="none" stroke="${MOCK_ACCENT}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                <text x="54" y="90" fill="${MOCK_WHITE}" font-size="11" font-family="sans-serif">I'm not a robot</text>
-                <text x="150" y="99" text-anchor="middle" fill="${MOCK_MUTED}" font-size="6" font-family="sans-serif">reCAPTCHA</text>
-                ${Array.from({ length: 9 }).map((_, i) => {
-                    const col = i % 3, row = Math.floor(i / 3);
-                    return `<rect x="${28 + col*50}" y="${128 + row*22}" width="44" height="18" rx="4" fill="rgba(255,255,255,.05)" stroke="${MOCK_LINE}"/>`;
-                }).join("")}
-                <circle cx="100" cy="30" r="18" fill="rgba(56,217,255,.1)" stroke="${MOCK_ACCENT}" stroke-width="1.5"/>
-                <path d="M100 20l7 3v6c0 5-3 8-7 10-4-2-7-5-7-10v-6z" fill="none" stroke="${MOCK_ACCENT}" stroke-width="1.6"/>
-            </svg>`;
-
-        case "realestate":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <g transform="translate(4 4)">
-                    <path d="M6 10l4-4 4 4v8H6z" fill="none" stroke="${MOCK_ACCENT}" stroke-width="1.6"/>
-                    <text x="22" y="12" fill="${MOCK_MUTED}" font-size="10" font-family="sans-serif">Gaborone, BW</text>
-                </g>
-                ${[0,1,2].map(i => `
-                    <g transform="translate(4 ${28 + i*62})">
-                        <rect width="192" height="54" rx="10" fill="${MOCK_PANEL}"/>
-                        <rect x="10" y="10" width="70" height="34" rx="6" fill="${i % 2 ? "rgba(47,111,237,.24)" : "rgba(56,217,255,.18)"}"/>
-                        <path d="M35 30l10-9 10 9" transform="translate(0 -6)" fill="none" stroke="${MOCK_ACCENT}" stroke-width="1.6"/>
-                        <rect x="90" y="14" width="80" height="7" rx="3.5" fill="${MOCK_LINE}"/>
-                        <rect x="90" y="26" width="55" height="6" rx="3" fill="${MOCK_LINE}" opacity=".6"/>
-                        <text x="170" y="42" text-anchor="end" fill="${MOCK_ACCENT}" font-size="10" font-family="sans-serif">P${1200 + i*350}k</text>
-                    </g>`).join("")}
-            </svg>`;
-
-        case "safety":
-            return `
-            <svg viewBox="0 0 200 220" class="mock-svg">
-                <rect x="4" y="4" width="192" height="150" rx="12" fill="${MOCK_PANEL}"/>
-                <polygon points="30,120 90,60 150,90 120,140" fill="rgba(255,77,109,.22)" stroke="rgba(255,77,109,.5)"/>
-                <path d="M20 130 C 60 90, 100 100, 130 60 S 180 30, 185 20" fill="none" stroke="${MOCK_ACCENT}"
-                    stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round" opacity=".8"/>
-                <circle cx="20" cy="130" r="5" fill="${MOCK_ACCENT}"/>
-                <circle cx="185" cy="20" r="5" fill="${MOCK_WHITE}"/>
-                <circle cx="90" cy="95" r="4.5" fill="#ff4d6d"/>
-                <circle cx="128" cy="72" r="4.5" fill="#ff4d6d"/>
-                <circle cx="100" cy="184" r="30" fill="url(#gradSos)" class="mock-sos-pulse"/>
-                <circle cx="100" cy="184" r="30" fill="none" stroke="#ff4d6d" stroke-width="2" opacity=".5" class="mock-sos-ring"/>
-                <text x="100" y="189" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="sans-serif">SOS</text>
-                <defs>
-                    <radialGradient id="gradSos">
-                        <stop offset="0" stop-color="#ff4d6d"/>
-                        <stop offset="1" stop-color="#8b1531"/>
-                    </radialGradient>
-                </defs>
-            </svg>`;
-
-        default:
-            return `<div class="mock-bar w60"></div>`;
-
-    }
-
-}
 
 /* ==========================================================
    PORTFOLIO CAROUSEL
@@ -450,7 +276,7 @@ function initializeCarousel() {
 
     const count = PROJECTS.length;
     const angleStep = 360 / count;
-    const radius = 460;
+    const radius = 420;
     let activeIndex = 0;
     let autoTimer = null;
 
@@ -464,7 +290,9 @@ function initializeCarousel() {
         item.innerHTML = `
             <div class="device-frame">
                 <div class="device-dots"><span></span><span></span><span></span></div>
-                <div class="device-screen">${mockupMarkup(project.mockup)}</div>
+                <div class="device-screen">
+                    <iframe src="${project.demo}" title="${project.title} live demo" loading="lazy"></iframe>
+                </div>
             </div>
             <div class="carousel-caption"><i class="${project.icon}"></i><span>${project.title}</span></div>
         `;
@@ -483,21 +311,12 @@ function initializeCarousel() {
 
     function renderDetail(project) {
 
-        const demoBlock = project.demo ? `
-            <div class="live-demo">
-                <span class="live-demo-label"><i class="ri-flashlight-line"></i> Live interactive demo — try the filters &amp; search</span>
-                <div class="live-demo-frame">
-                    <div class="device-dots"><span></span><span></span><span></span></div>
-                    <iframe src="${project.demo}" title="${project.title} interactive demo" loading="lazy"></iframe>
-                </div>
-            </div>` : "";
-
         detail.innerHTML = `
             <h3>${project.title}</h3>
             <span class="role">${project.role}</span>
             <p>${project.desc}</p>
             <div class="tags">${project.tech.map(t => `<span>${t}</span>`).join("")}</div>
-            ${demoBlock}
+            <span class="demo-hint"><i class="ri-cursor-line"></i> The centered card above is live — try it</span>
         `;
 
         if (typeof gsap !== "undefined") {
