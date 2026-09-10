@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATM Simulation</title>
+<style>
+    :root{
+        --accent:#a276ff;
+        --accent-dim:#7c4fe0;
+        --bg:#0e0a1a;
+        --bg2:#160f28;
+        --card:#1c1433;
+        --text:#f2eeff;
+        --muted:#9c90c2;
+    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{
+        font-family:'Segoe UI',system-ui,sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        display:flex;
+        flex-direction:column;
+        min-height:100vh;
+    }
+    header{
+        padding:16px 20px; background:var(--bg2); border-bottom:1px solid rgba(162,118,255,.15);
+        display:flex; justify-content:space-between; align-items:center;
+    }
+    header h1{ font-size:1rem; color:var(--accent); }
+    header p{ font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+    .logout-btn{ background:none; border:1px solid rgba(162,118,255,.3); color:var(--muted); border-radius:8px; padding:6px 10px; font-size:.7rem; cursor:pointer; }
+    main{ flex:1; padding:20px; display:flex; flex-direction:column; gap:16px; }
+
+    .screen{
+        background:var(--card); border-radius:16px; padding:20px; text-align:center;
+        border:1px solid rgba(162,118,255,.15); min-height:80px; display:flex; flex-direction:column; justify-content:center; gap:8px;
+    }
+    .screen h2{ font-size:.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    .screen .big{ font-size:1.6rem; font-weight:700; color:var(--accent); }
+    .pin-dots{ display:flex; justify-content:center; gap:12px; margin:6px 0; }
+    .pin-dots span{ width:14px; height:14px; border-radius:50%; border:1px solid var(--accent); }
+    .pin-dots span.filled{ background:var(--accent); }
+    .hint{ color:var(--muted); font-size:.72rem; }
+    .error-msg{ color:#ff8a8a; font-size:.78rem; min-height:16px; }
+
+    .keypad{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .keypad button{
+        padding:16px 0; border-radius:12px; border:none; background:var(--card); color:var(--text);
+        font-size:1.1rem; cursor:pointer; transition:.15s;
+    }
+    .keypad button:active{ transform:scale(.94); }
+    .keypad button.action{ background:rgba(162,118,255,.18); color:var(--accent); font-size:.85rem; }
+
+    .menu{ display:flex; flex-direction:column; gap:10px; }
+    .menu button{
+        padding:16px; border-radius:12px; border:1px solid rgba(162,118,255,.2); background:var(--card);
+        color:var(--text); font-size:.9rem; text-align:left; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+    }
+    .menu button:hover{ border-color:var(--accent); }
+    .menu button .arrow{ color:var(--accent); }
+
+    .amount-input{
+        width:100%; padding:14px; border-radius:12px; border:1px solid rgba(162,118,255,.25);
+        background:var(--card); color:var(--text); font-size:1.1rem; text-align:center;
+    }
+    .action-row{ display:flex; gap:10px; }
+    .action-row button{
+        flex:1; padding:14px; border-radius:12px; border:none; font-weight:600; cursor:pointer; font-size:.85rem;
+    }
+    .btn-primary{ background:var(--accent); color:#150a2e; }
+    .btn-secondary{ background:var(--card); color:var(--muted); border:1px solid rgba(162,118,255,.25) !important; }
+
+    .hidden{ display:none !important; }
+    footer{ padding:12px 20px; text-align:center; color:var(--muted); font-size:.7rem; background:var(--bg2); }
+</style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>NovaBank ATM</h1>
+        <p>Java · NetBeans</p>
+    </div>
+    <button class="logout-btn hidden" id="logoutBtn">Log out</button>
+</header>
+
+<main>
+
+    <!-- PIN SCREEN -->
+    <div id="pinScreen">
+        <div class="screen">
+            <h2>Enter PIN</h2>
+            <div class="pin-dots" id="pinDots">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="error-msg" id="pinError">&nbsp;</div>
+            <div class="hint">Demo PIN: 1234</div>
+        </div>
+        <div class="keypad" id="pinKeypad" style="margin-top:16px;">
+            <button data-num="1">1</button><button data-num="2">2</button><button data-num="3">3</button>
+            <button data-num="4">4</button><button data-num="5">5</button><button data-num="6">6</button>
+            <button data-num="7">7</button><button data-num="8">8</button><button data-num="9">9</button>
+            <button class="action" data-action="clear">Clear</button><button data-num="0">0</button><button class="action" data-action="enter">Enter</button>
+        </div>
+    </div>
+
+    <!-- MENU SCREEN -->
+    <div id="menuScreen" class="hidden menu">
+        <div class="screen">
+            <h2>Available Balance</h2>
+            <div class="big" id="balanceDisplay">P2,450.00</div>
+        </div>
+        <button data-go="withdraw">Withdraw Cash <span class="arrow">→</span></button>
+        <button data-go="deposit">Deposit Funds <span class="arrow">→</span></button>
+        <button data-go="balance">Balance Inquiry <span class="arrow">→</span></button>
+    </div>
+
+    <!-- AMOUNT SCREEN -->
+    <div id="amountScreen" class="hidden">
+        <div class="screen">
+            <h2 id="amountTitle">Withdraw Amount</h2>
+            <div class="error-msg" id="amountError">&nbsp;</div>
+        </div>
+        <input class="amount-input" id="amountInput" type="number" placeholder="Enter amount (P)" style="margin-top:14px;">
+        <div class="action-row" style="margin-top:14px;">
+            <button class="btn-secondary" data-go="menu">Back</button>
+            <button class="btn-primary" id="confirmAmountBtn">Confirm</button>
+        </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="resultScreen" class="hidden">
+        <div class="screen">
+            <h2 id="resultTitle">Transaction Complete</h2>
+            <div class="big" id="resultMessage"></div>
+        </div>
+        <div class="action-row" style="margin-top:14px;">
+            <button class="btn-primary" style="width:100%" data-go="menu">Back to Menu</button>
+        </div>
+    </div>
+
+</main>
+
+<footer>Demo build — simulated balance, no real transactions</footer>
+
+<script>
+    let balance = 2450;
+    let pin = '';
+    const CORRECT_PIN = '1234';
+    let pendingAction = null;
+
+    const pinScreen = document.getElementById('pinScreen');
+    const menuScreen = document.getElementById('menuScreen');
+    const amountScreen = document.getElementById('amountScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const balanceDisplay = document.getElementById('balanceDisplay');
+    const pinDots = document.querySelectorAll('#pinDots span');
+    const pinError = document.getElementById('pinError');
+
+    function show(screen){
+        [pinScreen, menuScreen, amountScreen, resultScreen].forEach(s => s.classList.add('hidden'));
+        screen.classList.remove('hidden');
+        logoutBtn.classList.toggle('hidden', screen === pinScreen);
+    }
+
+    function renderPin(){
+        pinDots.forEach((dot, i) => dot.classList.toggle('filled', i < pin.length));
+    }
+
+    document.querySelectorAll('#pinKeypad [data-num]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (pin.length >= 4) return;
+            pin += btn.dataset.num;
+            renderPin();
+        });
+    });
+
+    document.querySelector('[data-action="clear"]').addEventListener('click', () => {
+        pin = '';
+        pinError.textContent = ' ';
+        renderPin();
+    });
+
+    document.querySelector('[data-action="enter"]').addEventListener('click', () => {
+        if (pin.length < 4){
+            pinError.textContent = 'Enter a 4-digit PIN';
+            return;
+        }
+        if (pin === CORRECT_PIN){
+            pinError.textContent = ' ';
+            balanceDisplay.textContent = 'P' + balance.toFixed(2);
+            show(menuScreen);
+        } else {
+            pinError.textContent = 'Incorrect PIN, try again';
+        }
+        pin = '';
+        renderPin();
+    });
+
+    document.querySelectorAll('[data-go]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const dest = btn.dataset.go;
+            if (dest === 'menu'){
+                balanceDisplay.textContent = 'P' + balance.toFixed(2);
+                show(menuScreen);
+            } else if (dest === 'balance'){
+                document.getElementById('resultTitle').textContent = 'Available Balance';
+                document.getElementById('resultMessage').textContent = 'P' + balance.toFixed(2);
+                show(resultScreen);
+            } else {
+                pendingAction = dest;
+                document.getElementById('amountTitle').textContent = dest === 'withdraw' ? 'Withdraw Amount' : 'Deposit Amount';
+                document.getElementById('amountInput').value = '';
+                document.getElementById('amountError').textContent = ' ';
+                show(amountScreen);
+            }
+        });
+    });
+
+    document.getElementById('confirmAmountBtn').addEventListener('click', () => {
+        const val = Number(document.getElementById('amountInput').value);
+        const errorEl = document.getElementById('amountError');
+
+        if (!val || val <= 0){
+            errorEl.textContent = 'Enter a valid amount';
+            return;
+        }
+
+        if (pendingAction === 'withdraw'){
+            if (val > balance){
+                errorEl.textContent = 'Insufficient funds';
+                return;
+            }
+            balance -= val;
+            document.getElementById('resultTitle').textContent = 'Withdrawal Successful';
+            document.getElementById('resultMessage').textContent = '-P' + val.toFixed(2);
+        } else {
+            balance += val;
+            document.getElementById('resultTitle').textContent = 'Deposit Successful';
+            document.getElementById('resultMessage').textContent = '+P' + val.toFixed(2);
+        }
+
+        show(resultScreen);
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        pin = '';
+        renderPin();
+        show(pinScreen);
+    });
+
+    renderPin();
+</script>
+
+</body>
+</html>

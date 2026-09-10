@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tshireletso Safety App</title>
+<style>
+    :root{
+        --accent:#ff4d5e;
+        --accent-dim:#c92e3d;
+        --bg:#160709;
+        --bg2:#200c0f;
+        --card:#291014;
+        --text:#ffecee;
+        --muted:#c99095;
+    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{
+        font-family:'Segoe UI',system-ui,sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        display:flex;
+        flex-direction:column;
+        min-height:100vh;
+    }
+    header{ padding:16px 20px; background:var(--bg2); border-bottom:1px solid rgba(255,77,94,.15); }
+    header h1{ font-size:1rem; color:var(--accent); }
+    header p{ font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+
+    main{ flex:1; padding:16px; display:flex; flex-direction:column; gap:16px; }
+
+    .map{
+        position:relative; height:190px; border-radius:16px; background:var(--card);
+        border:1px solid rgba(255,77,94,.15); overflow:hidden;
+    }
+    .zone{ position:absolute; background:rgba(255,77,94,.25); border:1px solid rgba(255,77,94,.5); clip-path:polygon(15% 70%,55% 25%,90% 55%,65% 90%); inset:0; }
+    .route{ position:absolute; inset:0; }
+    .pin{ position:absolute; width:10px; height:10px; border-radius:50%; }
+    .pin.start{ background:var(--accent); top:78%; left:12%; }
+    .pin.end{ background:#fff; top:10%; left:88%; }
+    .map-label{ position:absolute; top:10px; left:12px; font-size:.7rem; color:var(--muted); background:rgba(0,0,0,.4); padding:4px 8px; border-radius:6px; }
+
+    .toggle-row{
+        display:flex; align-items:center; justify-content:space-between; background:var(--card);
+        padding:14px 16px; border-radius:14px; border:1px solid rgba(255,77,94,.12);
+    }
+    .toggle-row span{ font-size:.85rem; }
+    .switch{ position:relative; width:44px; height:24px; }
+    .switch input{ opacity:0; width:0; height:0; }
+    .slider{
+        position:absolute; inset:0; background:rgba(255,255,255,.15); border-radius:999px; cursor:pointer; transition:.2s;
+    }
+    .slider::before{
+        content:''; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s;
+    }
+    .switch input:checked + .slider{ background:var(--accent); }
+    .switch input:checked + .slider::before{ transform:translateX(20px); }
+
+    .sos-wrap{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:6px; }
+    .sos-btn{
+        width:130px; height:130px; border-radius:50%; border:none; cursor:pointer;
+        background:radial-gradient(circle, var(--accent), var(--accent-dim));
+        color:#fff; font-size:1.3rem; font-weight:800; letter-spacing:1px;
+        box-shadow:0 0 0 rgba(255,77,94,.5); animation:pulse 2.2s infinite;
+        transition:transform .15s;
+    }
+    .sos-btn:active{ transform:scale(.96); }
+    @keyframes pulse{
+        0%{ box-shadow:0 0 0 0 rgba(255,77,94,.5); }
+        70%{ box-shadow:0 0 0 22px rgba(255,77,94,0); }
+        100%{ box-shadow:0 0 0 0 rgba(255,77,94,0); }
+    }
+    .sos-hint{ color:var(--muted); font-size:.78rem; }
+
+    .modal-overlay{
+        position:fixed; inset:0; background:rgba(10,3,4,.7); display:flex; align-items:center; justify-content:center;
+        opacity:0; pointer-events:none; transition:.25s; z-index:20; padding:20px;
+    }
+    .modal-overlay.open{ opacity:1; pointer-events:auto; }
+    .modal{
+        background:var(--bg2); border-radius:18px; padding:24px; max-width:320px; width:100%; text-align:center;
+        border:1px solid rgba(255,77,94,.25);
+    }
+    .modal h2{ font-size:1rem; margin-bottom:10px; }
+    .modal p{ font-size:.82rem; color:var(--muted); margin-bottom:18px; line-height:1.6; }
+    .modal-actions{ display:flex; gap:10px; }
+    .modal-actions button{ flex:1; padding:12px; border-radius:10px; border:none; font-weight:600; font-size:.85rem; cursor:pointer; }
+    .btn-cancel{ background:var(--card); color:var(--muted); }
+    .btn-confirm{ background:var(--accent); color:#fff; }
+
+    .alert-banner{
+        display:none; align-items:center; gap:10px; background:rgba(255,77,94,.15); border:1px solid rgba(255,77,94,.4);
+        color:var(--text); padding:12px 14px; border-radius:12px; font-size:.8rem; animation:blink 1.4s infinite;
+    }
+    .alert-banner.show{ display:flex; }
+    @keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:.6; } }
+    .reset-btn{ background:none; border:none; color:var(--muted); font-size:.72rem; text-decoration:underline; cursor:pointer; margin-top:4px; }
+
+    footer{ padding:12px 20px; text-align:center; color:var(--muted); font-size:.7rem; background:var(--bg2); }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Tshireletso</h1>
+    <p>Java · GPS &amp; Real-Time Alerts</p>
+</header>
+
+<main>
+    <div class="map">
+        <div class="map-label">Gaborone — Red-Zone Route Map</div>
+        <div class="zone"></div>
+        <svg class="route" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M12 78 C 40 60, 55 55, 62 40 S 82 15, 88 10" fill="none" stroke="#ff4d5e" stroke-width="1.4" stroke-dasharray="3 2"/>
+        </svg>
+        <div class="pin start"></div>
+        <div class="pin end"></div>
+    </div>
+
+    <div class="toggle-row">
+        <span>Share Live Location</span>
+        <label class="switch">
+            <input type="checkbox" id="shareToggle" checked>
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="alert-banner" id="alertBanner">
+        🚨 SOS alert sent — location shared with 3 emergency contacts
+    </div>
+
+    <div class="sos-wrap">
+        <button class="sos-btn" id="sosBtn">SOS</button>
+        <div class="sos-hint" id="sosHint">Tap for emergency assistance</div>
+        <button class="reset-btn hidden" id="resetBtn" style="display:none;">Reset demo</button>
+    </div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <h2>Send SOS Alert?</h2>
+        <p>This will share your live location with your 3 saved emergency contacts and local response volunteers.</p>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="cancelBtn">Cancel</button>
+            <button class="btn-confirm" id="confirmBtn">Send Alert</button>
+        </div>
+    </div>
+</div>
+
+<footer>Demo build — no real alerts or location data are sent</footer>
+
+<script>
+    const sosBtn = document.getElementById('sosBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const alertBanner = document.getElementById('alertBanner');
+    const sosHint = document.getElementById('sosHint');
+    const resetBtn = document.getElementById('resetBtn');
+
+    sosBtn.addEventListener('click', () => modalOverlay.classList.add('open'));
+    cancelBtn.addEventListener('click', () => modalOverlay.classList.remove('open'));
+
+    confirmBtn.addEventListener('click', () => {
+        modalOverlay.classList.remove('open');
+        alertBanner.classList.add('show');
+        sosHint.textContent = 'Alert active — help is on the way';
+        sosBtn.disabled = true;
+        sosBtn.style.opacity = '.6';
+        resetBtn.style.display = 'inline-block';
+    });
+
+    resetBtn.addEventListener('click', () => {
+        alertBanner.classList.remove('show');
+        sosHint.textContent = 'Tap for emergency assistance';
+        sosBtn.disabled = false;
+        sosBtn.style.opacity = '1';
+        resetBtn.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>

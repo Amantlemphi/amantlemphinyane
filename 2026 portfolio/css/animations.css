@@ -2,888 +2,164 @@
 LOADER
 ==================================================*/
 
-@keyframes loaderProgress{
-    from{
-        width:0%;
-    }
-    to{
-        width:100%;
-    }
-}
+@keyframes loaderProgress{ from{ width:0%; } to{ width:100%; } }
 
-.loader-progress{
-    animation:loaderProgress 2.5s ease forwards;
-}
+.loader-progress{ animation:loaderProgress 2.2s ease forwards; }
 
-.loader-logo{
-
-    animation:
-        logoPulse 2s ease-in-out infinite,
-        logoRotate 10s linear infinite;
-
-}
+.loader-logo{ animation:logoPulse 2s ease-in-out infinite, logoRotate 10s linear infinite; }
 
 @keyframes logoPulse{
-
-    0%,100%{
-
-        transform:scale(1);
-
-        box-shadow:0 0 20px rgba(79,140,255,.2);
-
-    }
-
-    50%{
-
-        transform:scale(1.08);
-
-        box-shadow:
-        0 0 60px rgba(0,229,255,.6);
-
-    }
-
+    0%,100%{ transform:scale(1); box-shadow:0 0 20px rgba(47,111,237,.25); }
+    50%{ transform:scale(1.08); box-shadow:0 0 60px rgba(56,217,255,.6); }
 }
 
-@keyframes logoRotate{
-
-    from{
-
-        transform:rotate(0deg);
-
-    }
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-}
+@keyframes logoRotate{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
 
 /*==================================================
-FLOATING ORBITS
+ORBITS (home photo)
 ==================================================*/
 
-.orbit-one{
+.orbit-one{ animation:orbit1 18s linear infinite; }
+.orbit-two{ animation:orbit2 24s linear infinite reverse; }
+.orbit-three{ animation:orbit3 30s linear infinite; }
 
-    animation:orbit1 18s linear infinite;
-
-}
-
-.orbit-two{
-
-    animation:orbit2 24s linear infinite reverse;
-
-}
-
-.orbit-three{
-
-    animation:orbit3 30s linear infinite;
-
-}
-
-@keyframes orbit1{
-
-    from{
-
-        transform:rotate(0deg);
-
-    }
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-}
-
-@keyframes orbit2{
-
-    from{
-
-        transform:rotate(360deg);
-
-    }
-
-    to{
-
-        transform:rotate(0deg);
-
-    }
-
-}
-
+@keyframes orbit1{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+@keyframes orbit2{ from{ transform:rotate(360deg); } to{ transform:rotate(0deg); } }
 @keyframes orbit3{
-
-    from{
-
-        transform:rotate(0deg) scale(1);
-
-    }
-
-    50%{
-
-        transform:rotate(180deg) scale(1.03);
-
-    }
-
-    to{
-
-        transform:rotate(360deg) scale(1);
-
-    }
-
+    from{ transform:rotate(0deg) scale(1); }
+    50%{ transform:rotate(180deg) scale(1.04); }
+    to{ transform:rotate(360deg) scale(1); }
 }
 
-/*==================================================
-PROFILE FLOATING
-==================================================*/
-
-.profile-container{
-
-    animation:floating 6s ease-in-out infinite;
-
-}
+.home-photo{ animation:floating 6s ease-in-out infinite; }
 
 @keyframes floating{
-
-    0%{
-
-        transform:translateY(0);
-
-    }
-
-    50%{
-
-        transform:translateY(-18px);
-
-    }
-
-    100%{
-
-        transform:translateY(0);
-
-    }
-
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-14px); }
 }
 
 /*==================================================
-SCROLL INDICATOR
+NAV CARDS (3D floating)
 ==================================================*/
 
-.scroll-indicator{
-
-    position:absolute;
-
-    bottom:40px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:10px;
-
-    color:white;
-
-    animation:bounce 2s infinite;
-
-}
-
-@keyframes bounce{
-
-    0%,100%{
-
-        transform:translate(-50%,0);
-
-    }
-
-    50%{
-
-        transform:translate(-50%,12px);
-
-    }
-
+@keyframes cardFloat{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-12px); }
 }
 
 /*==================================================
-BUTTON GLOW
+TOPBAR / DOCK ENTRANCE
 ==================================================*/
 
-.primary-btn{
+.topbar, .dock{ animation:dropIn .8s ease; }
 
-    position:relative;
-
-    overflow:hidden;
-
-}
-
-.primary-btn::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:-100%;
-
-    left:-150%;
-
-    width:60%;
-
-    height:300%;
-
-    background:
-
-        rgba(255,255,255,.3);
-
-    transform:rotate(25deg);
-
-    transition:.7s;
-
-}
-
-.primary-btn:hover::before{
-
-    left:180%;
-
+@keyframes dropIn{
+    from{ opacity:0; transform:translateY(-30px); }
+    to{ opacity:1; transform:translateY(0); }
 }
 
 /*==================================================
-NAVBAR GLASS
+VIEW ENTRANCE
 ==================================================*/
 
-.header{
-
-    animation:navDrop 1s ease;
-
+.view.active .section-title,
+.view.active .home-intro,
+.view.active .about-grid,
+.view.active .impact-grid,
+.view.active .contact-wrapper{
+    animation:viewFadeUp .7s ease both;
 }
 
-@keyframes navDrop{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(-70px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+@keyframes viewFadeUp{
+    from{ opacity:0; transform:translateY(40px); }
+    to{ opacity:1; transform:translateY(0); }
 }
 
 /*==================================================
-HERO TEXT
+FUN BADGES
 ==================================================*/
 
-.hero-subtitle{
-
-    animation:fadeLeft 1s ease;
-
+.fun-badge{
+    animation:floatBadge 4s ease-in-out infinite;
+    animation-delay:var(--delay,0s);
+    transition:transform .3s ease, background .3s ease;
 }
 
-.hero h1{
+.fun-badge:hover{ transform:scale(1.08) rotate(-3deg); background:rgba(255,255,255,.1); }
 
-    animation:fadeUp 1.2s ease;
-
-}
-
-.hero p{
-
-    animation:fadeUp 1.4s ease;
-
-}
-
-.hero-buttons{
-
-    animation:fadeUp 1.6s ease;
-
-}
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:
-
-        translateY(80px);
-
-        filter:blur(10px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-
-        translateY(0);
-
-        filter:blur(0);
-
-    }
-
-}
-
-@keyframes fadeLeft{
-
-    from{
-
-        opacity:0;
-
-        transform:translateX(-60px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateX(0);
-
-    }
-
-}
-
-/*==================================================
-SECTION TITLES
-==================================================*/
-
-.section-title{
-
-    animation:titleReveal both;
-
-    animation-timeline:view();
-
-    animation-range:
-
-        entry 10%
-
-        cover 30%;
-
-}
-
-@keyframes titleReveal{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(70px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+@keyframes floatBadge{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-8px); }
 }
 
 /*==================================================
 GLASS CARDS
 ==================================================*/
 
-.glass{
+.glass{ transition:transform .45s, box-shadow .45s, border-color .45s; }
 
-    transition:
-
-        transform .45s,
-
-        box-shadow .45s,
-
-        border-color .45s;
-
-}
-
-.glass:hover{
-
-    transform:
-
-        translateY(-10px)
-
-        scale(1.02);
-
-    border-color:
-
-        rgba(0,229,255,.35);
-
-    box-shadow:
-
-        0 20px 60px
-
-        rgba(0,229,255,.15);
-
+.impact-card.glass:hover, .info-card.glass:hover{
+    transform:translateY(-8px);
+    border-color:rgba(56,217,255,.35);
+    box-shadow:0 20px 60px rgba(56,217,255,.15);
 }
 
 /*==================================================
-SKILL CARDS
+IMPACT CARDS
 ==================================================*/
 
-.skill-card{
+.impact-image img{ transition:transform .7s; }
 
-    transform-style:
-
-        preserve-3d;
-
-}
-
-.skill-card:hover{
-
-    transform:
-
-        perspective(1200px)
-
-        rotateX(8deg)
-
-        rotateY(-8deg)
-
-        translateY(-12px);
-
-}
-
-.skill-card i{
-
-    transition:.5s;
-
-}
-
-.skill-card:hover i{
-
-    transform:
-
-        scale(1.25)
-
-        rotate(12deg);
-
-}
-
-/*==================================================
-PROJECTS
-==================================================*/
-
-.project{
-
-    transition:
-
-        .5s;
-
-    overflow:hidden;
-
-}
-
-.project img{
-
-    transition:
-
-        transform .8s;
-
-}
-
-.project:hover img{
-
-    transform:
-
-        scale(1.12);
-
-}
-
-.project::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    linear-gradient(
-
-    transparent,
-
-    rgba(0,0,0,.45)
-
-    );
-
-    opacity:0;
-
-    transition:.5s;
-
-}
-
-.project:hover::after{
-
-    opacity:1;
-
-}
-
-.project:hover{
-
-    transform:
-
-        translateY(-12px)
-
-        rotateX(4deg);
-
-}
-
-/*==================================================
-TIMELINE
-==================================================*/
-
-.timeline-item{
-
-    opacity:0;
-
-    animation:
-
-        slideTimeline both;
-
-    animation-timeline:view();
-
-    animation-range:
-
-        entry 20%
-
-        cover 40%;
-
-}
-
-@keyframes slideTimeline{
-
-    from{
-
-        opacity:0;
-
-        transform:
-
-        translateX(-120px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-
-        translateX(0);
-
-    }
-
-}
-
-/*==================================================
-STATS
-==================================================*/
-
-.stat{
-
-    animation:
-
-        statFloat
-
-        4s
-
-        ease-in-out
-
-        infinite;
-
-}
-
-.stat:nth-child(2){
-
-    animation-delay:.5s;
-
-}
-
-.stat:nth-child(3){
-
-    animation-delay:1s;
-
-}
-
-.stat:nth-child(4){
-
-    animation-delay:1.5s;
-
-}
-
-@keyframes statFloat{
-
-    0%,100%{
-
-        transform:
-
-        translateY(0);
-
-    }
-
-    50%{
-
-        transform:
-
-        translateY(-10px);
-
-    }
-
-}
+.impact-card:hover .impact-image img{ transform:scale(1.1); }
 
 /*==================================================
 CONTACT
 ==================================================*/
 
 .contact-form input:focus,
-
 .contact-form textarea:focus{
-
     outline:none;
-
-    border-color:#00e5ff;
-
-    box-shadow:
-
-        0 0 25px
-
-        rgba(0,229,255,.35);
-
-}
-
-/*==================================================
-SOCIALS
-==================================================*/
-
-.socials a{
-
-    transition:.4s;
-
-}
-
-.socials a:hover{
-
-    transform:
-
-        translateY(-8px)
-
-        scale(1.25);
-
-    color:#00e5ff;
-
+    border-color:var(--accent);
+    box-shadow:0 0 25px rgba(56,217,255,.3);
 }
 
 /*==================================================
 GRADIENT TEXT
 ==================================================*/
 
-.gradient{
+.gradient{ background-size:300%; animation:gradientMove 6s linear infinite; }
 
-    background-size:300%;
-
-    animation:
-
-        gradientMove
-
-        6s linear infinite;
-
-}
-
-@keyframes gradientMove{
-
-    from{
-
-        background-position:0%;
-
-    }
-
-    to{
-
-        background-position:300%;
-
-    }
-
-}
+@keyframes gradientMove{ from{ background-position:0%; } to{ background-position:300%; } }
 
 /*==================================================
-BACKGROUND GLOW
+BACKGROUND GLOW (abstract art blobs)
 ==================================================*/
 
-body::before{
-
-    animation:
-
-        glow1
-
-        10s ease-in-out infinite;
-
-}
-
-body::after{
-
-    animation:
-
-        glow2
-
-        12s ease-in-out infinite;
-
-}
-
 @keyframes glow1{
-
-    0%,100%{
-
-        transform:
-
-        translate(0,0)
-
-        scale(1);
-
-    }
-
-    50%{
-
-        transform:
-
-        translate(-80px,60px)
-
-        scale(1.2);
-
-    }
-
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-90px,60px) scale(1.15); }
 }
 
 @keyframes glow2{
-
-    0%,100%{
-
-        transform:
-
-        translate(0,0)
-
-        scale(1);
-
-    }
-
-    50%{
-
-        transform:
-
-        translate(100px,-70px)
-
-        scale(1.15);
-
-    }
-
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(90px,-70px) scale(1.1); }
 }
 
 /*==================================================
 CUSTOM CURSOR
 ==================================================*/
 
-.cursor{
+.cursor{ transition:transform .08s linear, opacity .2s; }
 
-    transition:
-
-        transform .08s linear,
-
-        opacity .2s;
-
-}
-
-.cursor-outline{
-
-    transition:
-
-        transform .18s linear,
-
-        width .3s,
-
-        height .3s;
-
-}
+.cursor-outline{ transition:transform .18s linear, width .3s, height .3s; }
 
 a:hover ~ .cursor-outline,
-
-button:hover ~ .cursor-outline{
-
-    width:70px;
-
-    height:70px;
-
-}
-
-/*==================================================
-FADE IN ON SCROLL
-==================================================*/
-
-.reveal{
-
-    opacity:0;
-
-    transform:
-
-        translateY(80px);
-
-    transition:
-
-        all 1s ease;
-
-}
-
-.reveal.active{
-
-    opacity:1;
-
-    transform:
-
-        translateY(0);
-
-}
+button:hover ~ .cursor-outline{ width:70px; height:70px; }
 
 /*==================================================
 PAGE FADE
 ==================================================*/
 
-body{
+body{ animation:pageFade 1s ease; }
 
-    animation:
-
-        pageFade
-
-        1s ease;
-
-}
-
-@keyframes pageFade{
-
-    from{
-
-        opacity:0;
-
-    }
-
-    to{
-
-        opacity:1;
-
-    }
-
-}
+@keyframes pageFade{ from{ opacity:0; } to{ opacity:1; } }

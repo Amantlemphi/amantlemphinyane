@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate Listings</title>
+<style>
+    :root{
+        --accent:#f2b544;
+        --accent-dim:#c98f1f;
+        --bg:#150f06;
+        --bg2:#1f1608;
+        --card:#261a09;
+        --text:#fff6e6;
+        --muted:#c2ac85;
+    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{
+        font-family:'Segoe UI',system-ui,sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        display:flex;
+        flex-direction:column;
+        min-height:100vh;
+    }
+    header{ padding:16px 20px; background:var(--bg2); border-bottom:1px solid rgba(242,181,68,.15); }
+    header h1{ font-size:1rem; color:var(--accent); }
+    header p{ font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+
+    main{ flex:1; padding:16px; display:flex; flex-direction:column; gap:14px; }
+
+    .filters{ display:flex; gap:8px; overflow-x:auto; padding-bottom:2px; }
+    .filter-chip{
+        flex-shrink:0; padding:9px 15px; border-radius:999px; border:1px solid rgba(242,181,68,.25);
+        background:var(--card); color:var(--muted); font-size:.78rem; cursor:pointer; transition:.2s; white-space:nowrap;
+    }
+    .filter-chip.active{ background:var(--accent); color:#241703; border-color:var(--accent); font-weight:600; }
+
+    .sort-row{ display:flex; justify-content:space-between; align-items:center; font-size:.75rem; color:var(--muted); }
+    .sort-row select{ background:var(--card); color:var(--text); border:1px solid rgba(242,181,68,.2); border-radius:8px; padding:6px 8px; font-size:.75rem; }
+
+    .listings{ display:flex; flex-direction:column; gap:12px; }
+    .property{
+        background:var(--card); border-radius:16px; padding:14px; border:1px solid rgba(242,181,68,.12); cursor:pointer;
+    }
+    .prop-top{ display:flex; gap:12px; }
+    .prop-thumb{
+        width:64px; height:64px; border-radius:10px; flex-shrink:0;
+        background:linear-gradient(135deg, rgba(242,181,68,.3), rgba(242,181,68,.05));
+        display:flex; align-items:center; justify-content:center; font-size:1.6rem;
+    }
+    .prop-info{ flex:1; min-width:0; }
+    .prop-info h3{ font-size:.9rem; }
+    .prop-info .loc{ font-size:.72rem; color:var(--muted); margin-top:2px; }
+    .prop-info .meta{ font-size:.72rem; color:var(--muted); margin-top:4px; display:flex; gap:10px; }
+    .prop-price{ color:var(--accent); font-weight:700; font-size:.95rem; white-space:nowrap; }
+    .prop-details{
+        max-height:0; overflow:hidden; transition:.3s ease; font-size:.78rem; color:var(--muted); line-height:1.6;
+    }
+    .property.expanded .prop-details{ max-height:120px; margin-top:10px; padding-top:10px; border-top:1px solid rgba(242,181,68,.15); }
+    .no-results{ text-align:center; color:var(--muted); font-size:.85rem; padding:30px 0; }
+    footer{ padding:12px 20px; text-align:center; color:var(--muted); font-size:.7rem; background:var(--bg2); }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Gaborone Property Finder</h1>
+    <p>JavaScript · Dynamic Rendering</p>
+</header>
+
+<main>
+    <div class="filters" id="filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="under1">Under P1M</button>
+        <button class="filter-chip" data-filter="1to2">P1M – P2M</button>
+        <button class="filter-chip" data-filter="over2">Over P2M</button>
+    </div>
+
+    <div class="sort-row">
+        <span id="resultCount">6 properties</span>
+        <select id="sortSelect">
+            <option value="default">Sort: Featured</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+        </select>
+    </div>
+
+    <div class="listings" id="listings"></div>
+</main>
+
+<footer>Demo build — sample listings for illustration only</footer>
+
+<script>
+    const properties = [
+        { id: 1, name: 'Riverwalk Family Home', loc: 'Block 8, Gaborone', price: 1850000, beds: 4, baths: 3, emoji: '🏡', desc: 'Spacious 4-bedroom home with a landscaped garden and double garage.' },
+        { id: 2, name: 'City View Apartment', loc: 'CBD, Gaborone', price: 780000, beds: 2, baths: 1, emoji: '🏢', desc: 'Modern 2-bedroom apartment with secure parking and city views.' },
+        { id: 3, name: 'Phakalane Estate Villa', loc: 'Phakalane, Gaborone', price: 3200000, beds: 5, baths: 4, emoji: '🏘️', desc: 'Luxury villa on the golf estate with pool and staff quarters.' },
+        { id: 4, name: 'Extension 9 Starter Home', loc: 'Extension 9, Gaborone', price: 650000, beds: 2, baths: 1, emoji: '🏠', desc: 'Compact starter home, ideal for first-time buyers, close to schools.' },
+        { id: 5, name: 'Broadhurst Townhouse', loc: 'Broadhurst, Gaborone', price: 1450000, beds: 3, baths: 2, emoji: '🏡', desc: 'Townhouse in a gated complex with communal pool and 24hr security.' },
+        { id: 6, name: 'Village Executive Suite', loc: 'The Village, Gaborone', price: 2450000, beds: 4, baths: 3, emoji: '🏢', desc: 'Executive home near the mall, recently renovated with modern finishes.' }
+    ];
+
+    let activeFilter = 'all';
+    let sortMode = 'default';
+    const listingsEl = document.getElementById('listings');
+    const resultCount = document.getElementById('resultCount');
+
+    function matchesFilter(p){
+        if (activeFilter === 'under1') return p.price < 1000000;
+        if (activeFilter === '1to2') return p.price >= 1000000 && p.price <= 2000000;
+        if (activeFilter === 'over2') return p.price > 2000000;
+        return true;
+    }
+
+    function fmt(n){ return 'P' + n.toLocaleString(); }
+
+    function render(){
+        let list = properties.filter(matchesFilter);
+        if (sortMode === 'low') list = list.slice().sort((a,b) => a.price - b.price);
+        if (sortMode === 'high') list = list.slice().sort((a,b) => b.price - a.price);
+
+        resultCount.textContent = list.length + ' propert' + (list.length === 1 ? 'y' : 'ies');
+
+        if (!list.length){
+            listingsEl.innerHTML = '<div class="no-results">No properties match this filter</div>';
+            return;
+        }
+
+        listingsEl.innerHTML = list.map(p => `
+            <div class="property" data-id="${p.id}">
+                <div class="prop-top">
+                    <div class="prop-thumb">${p.emoji}</div>
+                    <div class="prop-info">
+                        <h3>${p.name}</h3>
+                        <div class="loc">📍 ${p.loc}</div>
+                        <div class="meta"><span>${p.beds} beds</span><span>${p.baths} baths</span></div>
+                    </div>
+                    <div class="prop-price">${fmt(p.price)}</div>
+                </div>
+                <div class="prop-details">${p.desc}</div>
+            </div>
+        `).join('');
+
+        listingsEl.querySelectorAll('.property').forEach(card => {
+            card.addEventListener('click', () => card.classList.toggle('expanded'));
+        });
+    }
+
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            activeFilter = chip.dataset.filter;
+            render();
+        });
+    });
+
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+        sortMode = e.target.value;
+        render();
+    });
+
+    render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Calculator</title>
+<style>
+    :root{
+        --accent:#ff9f43;
+        --accent-dim:#c9720f;
+        --bg:#150d05;
+        --bg2:#1e1409;
+        --card:#251808;
+        --text:#fff3e6;
+        --muted:#b8a08a;
+    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+    body{
+        font-family:'Segoe UI',system-ui,sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        display:flex;
+        flex-direction:column;
+        min-height:100vh;
+    }
+    header{
+        padding:18px 20px 14px;
+        background:var(--bg2);
+        border-bottom:1px solid rgba(255,159,67,.15);
+    }
+    header h1{ font-size:1rem; color:var(--accent); letter-spacing:.5px; }
+    header p{ font-size:.72rem; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:1px; }
+    main{ flex:1; padding:18px; display:flex; flex-direction:column; gap:14px; }
+    .display{
+        background:var(--card);
+        border-radius:16px;
+        padding:18px;
+        min-height:90px;
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-end;
+        gap:6px;
+        border:1px solid rgba(255,159,67,.15);
+    }
+    .display .expr{ color:var(--muted); font-size:.85rem; min-height:18px; word-break:break-all; text-align:right; font-family:'Consolas',monospace; }
+    .display .result{ color:var(--accent); font-size:2rem; font-weight:600; text-align:right; word-break:break-all; font-family:'Consolas',monospace; }
+    .mode-row{ display:flex; gap:8px; }
+    .mode-btn{
+        flex:1; padding:8px; border-radius:10px; border:1px solid rgba(255,159,67,.25);
+        background:transparent; color:var(--muted); font-size:.72rem; letter-spacing:.5px; cursor:pointer;
+        transition:.2s;
+    }
+    .mode-btn.active{ background:var(--accent); color:#1a0f03; border-color:var(--accent); font-weight:600; }
+    .keys{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; flex:1; }
+    .keys.sci{ display:none; }
+    .keys.sci.show{ display:grid; }
+    button.key{
+        border:none; border-radius:12px; background:var(--card); color:var(--text);
+        font-size:1.05rem; padding:16px 0; cursor:pointer; transition:.15s; font-family:inherit;
+    }
+    button.key:active{ transform:scale(.94); }
+    button.key.op{ background:rgba(255,159,67,.18); color:var(--accent); }
+    button.key.eq{ background:var(--accent); color:#1a0f03; font-weight:700; }
+    button.key.fn{ background:rgba(255,159,67,.1); color:var(--accent); font-size:.85rem; }
+    button.key.wide{ grid-column:span 2; }
+    footer{ padding:14px 20px; text-align:center; color:var(--muted); font-size:.7rem; background:var(--bg2); }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Scientific Calculator</h1>
+    <p>Android · Java</p>
+</header>
+
+<main>
+    <div class="display">
+        <div class="expr" id="expr">&nbsp;</div>
+        <div class="result" id="result">0</div>
+    </div>
+
+    <div class="mode-row">
+        <button class="mode-btn active" id="basicModeBtn">BASIC</button>
+        <button class="mode-btn" id="sciModeBtn">SCIENTIFIC</button>
+    </div>
+
+    <div class="keys sci" id="sciKeys">
+        <button class="key fn" data-fn="sin(">sin</button>
+        <button class="key fn" data-fn="cos(">cos</button>
+        <button class="key fn" data-fn="tan(">tan</button>
+        <button class="key fn" data-fn="log(">log</button>
+        <button class="key fn" data-fn="sqrt(">√</button>
+        <button class="key fn" data-fn="(">(</button>
+        <button class="key fn" data-fn=")">)</button>
+        <button class="key fn" data-op="^">x^y</button>
+    </div>
+
+    <div class="keys" id="basicKeys">
+        <button class="key op" data-action="clear">C</button>
+        <button class="key op" data-action="back">⌫</button>
+        <button class="key op" data-op="%">%</button>
+        <button class="key op" data-op="/">÷</button>
+
+        <button class="key" data-num="7">7</button>
+        <button class="key" data-num="8">8</button>
+        <button class="key" data-num="9">9</button>
+        <button class="key op" data-op="*">×</button>
+
+        <button class="key" data-num="4">4</button>
+        <button class="key" data-num="5">5</button>
+        <button class="key" data-num="6">6</button>
+        <button class="key op" data-op="-">−</button>
+
+        <button class="key" data-num="1">1</button>
+        <button class="key" data-num="2">2</button>
+        <button class="key" data-num="3">3</button>
+        <button class="key op" data-op="+">+</button>
+
+        <button class="key wide" data-num="0">0</button>
+        <button class="key" data-num=".">.</button>
+        <button class="key eq" data-action="equals">=</button>
+    </div>
+</main>
+
+<footer>Demo build — tap SCIENTIFIC for trig &amp; log functions</footer>
+
+<script>
+    const exprEl = document.getElementById('expr');
+    const resultEl = document.getElementById('result');
+    let expr = '';
+
+    function render(){
+        exprEl.textContent = expr || ' ';
+    }
+
+    function safeEval(source){
+        let e = source;
+        e = e.replace(/sin\(([^()]*)\)/g, 'Math.sin(($1)*Math.PI/180)');
+        e = e.replace(/cos\(([^()]*)\)/g, 'Math.cos(($1)*Math.PI/180)');
+        e = e.replace(/tan\(([^()]*)\)/g, 'Math.tan(($1)*Math.PI/180)');
+        e = e.replace(/log\(([^()]*)\)/g, 'Math.log10($1)');
+        e = e.replace(/sqrt\(([^()]*)\)/g, 'Math.sqrt($1)');
+        e = e.replace(/\^/g, '**');
+        e = e.replace(/%/g, '/100');
+        return Function('"use strict"; return (' + e + ')')();
+    }
+
+    document.querySelectorAll('[data-num]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            expr += btn.dataset.num;
+            render();
+        });
+    });
+
+    document.querySelectorAll('[data-op]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            expr += btn.dataset.op;
+            render();
+        });
+    });
+
+    document.querySelectorAll('[data-fn]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            expr += btn.dataset.fn;
+            render();
+        });
+    });
+
+    document.querySelector('[data-action="clear"]').addEventListener('click', () => {
+        expr = '';
+        resultEl.textContent = '0';
+        render();
+    });
+
+    document.querySelector('[data-action="back"]').addEventListener('click', () => {
+        expr = expr.slice(0, -1);
+        render();
+    });
+
+    document.querySelector('[data-action="equals"]').addEventListener('click', () => {
+        if (!expr) return;
+        try {
+            const value = safeEval(expr);
+            resultEl.textContent = Number.isFinite(value) ? String(Math.round(value * 100000) / 100000) : 'Error';
+        } catch (err) {
+            resultEl.textContent = 'Error';
+        }
+    });
+
+    const basicKeys = document.getElementById('basicKeys');
+    const sciKeys = document.getElementById('sciKeys');
+    const basicModeBtn = document.getElementById('basicModeBtn');
+    const sciModeBtn = document.getElementById('sciModeBtn');
+
+    basicModeBtn.addEventListener('click', () => {
+        sciKeys.classList.remove('show');
+        basicModeBtn.classList.add('active');
+        sciModeBtn.classList.remove('active');
+    });
+
+    sciModeBtn.addEventListener('click', () => {
+        sciKeys.classList.add('show');
+        sciModeBtn.classList.add('active');
+        basicModeBtn.classList.remove('active');
+    });
+</script>
+
+</body>
+</html>

@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Amantle Mphinyane | Computer Systems Engineer</title>
+    <meta name="description" content="Amantle Mphinyane — Computer Systems Engineer, educator and creative building inclusive technology.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <!-- Remix Icons -->
@@ -22,746 +21,409 @@
     <link rel="stylesheet" href="css/animations.css">
 
 </head>
-
 <body>
 
 <!--=============================================
 Loading Screen
 ==============================================-->
-
 <div id="loader">
-
-    <div class="loader-logo">
-
-        <span>A</span>
-
-    </div>
-
-    <div class="loader-bar">
-
-        <div class="loader-progress"></div>
-
-    </div>
-
+    <div class="loader-logo"><span>A</span></div>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
+    <p class="loader-tag">Entering the studio…</p>
 </div>
 
 <!--=============================================
 Custom Cursor
 ==============================================-->
-
 <div class="cursor"></div>
-
 <div class="cursor-outline"></div>
 
 <!--=============================================
-Three.js Background
+Three.js Abstract 3D Background
 ==============================================-->
-
 <canvas id="scene"></canvas>
+<div class="paint-overlay"></div>
 
 <!--=============================================
-Navigation
+Top Bar
 ==============================================-->
-
-<header class="header">
-
-    <nav class="navbar">
-
-        <a href="#" class="logo">
-
-            AM
-
-        </a>
-
-        <ul class="nav-links">
-
-            <li><a href="#home">Home</a></li>
-
-            <li><a href="#about">About</a></li>
-
-            <li><a href="#skills">Skills</a></li>
-
-            <li><a href="#projects">Projects</a></li>
-
-            <li><a href="#contact">Contact</a></li>
-
-        </ul>
-
-        <div class="menu-btn">
-
-            <i class="ri-menu-4-line"></i>
-
-        </div>
-
-    </nav>
-
+<header class="topbar">
+    <button class="brand" data-nav="home" aria-label="Home">AM</button>
+    <div class="topbar-role">Computer Systems Engineer</div>
 </header>
 
 <!--=============================================
-Hero
+Floating 3D Dock Navigation
 ==============================================-->
-
-<section id="home" class="hero">
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-
-        <div class="hero-left">
-
-            <span class="hero-subtitle">
-
-                BSc(HONS) COMPUTER SYSTEMS ENGINEERING
-
-            </span>
-
-            <i class="ri-settings-3-line hero-gear"></i>
-
-<h1>
-
-    Building
-
-    <span class="gradient">
-
-        Intelligent
-
-    </span>
-
-    Digital
-
-    Experiences
-
-</h1>
-
-            <p>
-
-                First Class Honours graduate and technology-driven problem solver, specializing
-                in engineering innovative, human-centered solutions that empower communities
-                and inspire growth. Web, data, and digital solutions professional.
-
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="#projects" class="primary-btn">
-
-                    Explore Work
-
-                </a>
-
-                <a href="#contact" class="secondary-btn">
-
-                    Contact Me
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="hero-right">
-
-            <div class="profile-container">
-
-                <div class="orbit orbit-one"></div>
-
-                <div class="orbit orbit-two"></div>
-
-                <div class="orbit orbit-three"></div>
-
-                <img src="images/dawnHerr.jpeg" alt="Profile">
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="scroll-indicator">
-
-        <span>Scroll</span>
-
-        <i class="ri-arrow-down-line"></i>
-
-    </div>
-
-</section>
+<nav class="dock" id="dock">
+    <button class="dock-btn active" data-nav="home"><i class="ri-home-5-line"></i><span>Home</span></button>
+    <button class="dock-btn" data-nav="about"><i class="ri-user-heart-line"></i><span>About</span></button>
+    <button class="dock-btn" data-nav="portfolio"><i class="ri-layout-grid-line"></i><span>Portfolio</span></button>
+    <button class="dock-btn" data-nav="impact"><i class="ri-hand-heart-line"></i><span>Impact</span></button>
+    <button class="dock-btn" data-nav="contact"><i class="ri-mail-line"></i><span>Contact</span></button>
+</nav>
 
 <!--=============================================
-About
+App Views
 ==============================================-->
-
-<section id="about" class="about">
-
-    <div class="section-title">
-
-        <span>ABOUT ME</span>
-
-        <h2>
-
-            Engineer.
-
-            Educator.
-
-            Designer.
-
-        </h2>
-
-    </div>
-
-    <div class="about-grid">
-
-        <div class="about-image glass">
-
-            <img src="images/profile.jpeg" alt="Amantle Mphinyane">
-
-        </div>
-
-        <div class="about-text">
-
-            <p>
-
-                I'm a Computer Systems Engineering graduate with a passion for creating technology
-                solutions that make a real difference. My journey has taken me through diverse
-                domains, from building web applications and managing data infrastructure to
-                educating young minds and expressing creativity through art.
-
-            </p>
-
-            <p>
-
-                As a former educator, I've had the privilege of teaching children, including
-                those with special needs, which taught me patience, empathy, and the importance
-                of adapting to different learning styles. Currently, I work as a private tutor,
-                continuing to nurture growth in others.
-
-            </p>
-
-            <p>
-
-                My creative background in painting and graphic design complements my technical
-                skills, allowing me to approach problems with both analytical precision and
-                creative flair. I believe in continuous learning and bring adaptability to
-                every project I undertake.
-
-            </p>
-
-            <div class="fun-badges">
-
-    <div class="fun-badge glass" style="--delay:0s">
-        <i class="ri-palette-line fun-badge-icon"></i>
-        <span>Artist at heart</span>
-    </div>
-
-    <div class="fun-badge glass" style="--delay:.4s">
-        <i class="ri-graduation-cap-line fun-badge-icon"></i>
-        <span>First Class Honours</span>
-    </div>
-
-    <div class="fun-badge glass" style="--delay:.8s">
-        <i class="ri-user-star-line fun-badge-icon"></i>
-        <span>Loves teaching</span>
-    </div>
-
-    <div class="fun-badge glass" style="--delay:1.2s">
-        <i class="ri-rocket-2-line fun-badge-icon"></i>
-        <span>Always building</span>
-    </div>
-
-    <div class="fun-badge glass" style="--delay:1.6s">
-        <i class="ri-trophy-line fun-badge-icon"></i>
-        <span>2nd, GirlCode 2025</span>
-    </div>
-
-    <div class="fun-badge glass" style="--delay:2s">
-        <i class="ri-cup-line fun-badge-icon"></i>
-        <span>Fueled by curiosity</span>
-    </div>
-
-</div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =============================================
-SKILLS
-============================================== -->
-
-<section id="skills" class="skills">
-
-    <div class="section-title">
-
-        <span>MY EXPERTISE</span>
-
-        <h2>Technology Stack</h2>
-
-    </div>
-
-    <div class="skills-container">
-
-        <div class="skill-card glass">
-            <i class="ri-code-s-slash-line"></i>
-            <h3>Web &amp; Mobile Dev</h3>
-            <p>HTML, CSS, JavaScript, Java, responsive & mobile-friendly builds</p>
-        </div>
-
-        <div class="skill-card glass">
-            <i class="ri-database-2-line"></i>
-            <h3>Data Management</h3>
-            <p>SQL, database architecture, backups, indexing, query optimization</p>
-        </div>
-
-        <div class="skill-card glass">
-            <i class="ri-cloud-line"></i>
-            <h3>Data Infrastructure</h3>
-            <p>NetApp technologies, scalable infrastructure, data integrity & security</p>
-        </div>
-
-        <div class="skill-card glass">
-            <i class="ri-palette-line"></i>
-            <h3>Graphic Design</h3>
-            <p>Branding, posters, event cards, promotional & digital graphics</p>
-        </div>
-
-        <div class="skill-card glass">
-            <i class="ri-brush-line"></i>
-            <h3>Fine Art &amp; UI/UX</h3>
-            <p>Traditional painting, UI/UX design, visual storytelling</p>
-        </div>
-
-        <div class="skill-card glass">
-            <i class="ri-book-open-line"></i>
-            <h3>Education &amp; Tutoring</h3>
-            <p>Private tutoring, lesson planning, teaching learners with special needs</p>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =============================================
-TIMELINE
-============================================== -->
-
-<section class="timeline">
-
-    <div class="section-title">
-
-        <span>CAREER JOURNEY</span>
-
-        <h2>Experience Timeline</h2>
-
-    </div>
-
-    <div class="timeline-wrapper">
-
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass">
-                <h3>Dawnbell Academy</h3>
-                <span>Educator | Teacher Aide &amp; Tutor</span>
-                <p>
-                    Supported student learning through personalized instruction and practical
-                    academic assistance across multiple subjects. Designed engaging lesson plans
-                    to simplify complex concepts, and assisted school leadership with operational
-                    and administrative responsibilities.
-                </p>
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass">
-                <h3>Spectrum Analytics</h3>
-                <span>Data Infrastructure Intern</span>
-                <p>
-                    Learned to operate NetApp technologies to support the design and optimization
-                    of scalable data infrastructure. Assisted with backups, indexing, and query
-                    optimization to enhance system performance, integrity, and security, and
-                    completed certifications aligned with enterprise data infrastructure systems.
-                </p>
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass">
-                <h3>GirlCode Hackathon 2025</h3>
-                <span>2nd Place — Team</span>
-                <p>
-                    Competed under the theme "Future Proofing Africa: Innovation at the
-                    intersection of FinTech, Cybersecurity, and AI," building a working solution
-                    with a teammate that placed second overall.
-                </p>
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content glass">
-                <h3>Thrive; Nurture &amp; Play</h3>
-                <span>Volunteer</span>
-                <p>
-                    Support children living with cancer and other serious illnesses by preparing
-                    play boxes and facilitating engaging activities that bring comfort and joy
-                    during challenging times.
-                </p>
-            </div>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =============================================
-PROJECTS
-============================================== -->
-
-<section id="projects" class="projects">
-
-    <div class="section-title">
-
-        <span>MY WORK</span>
-
-        <h2>Professional Roles</h2>
-
-    </div>
-
-    <div class="projects-grid">
-
-        <article class="project glass">
-
-            <div class="project-image">
-
-                <img src="images/dawn1.png" alt="Educator at Dawnbell Academy">
-
+<main id="app">
+
+    <!-- ============ HOME ============ -->
+    <section class="view active" data-view="home" id="view-home">
+        <div class="home-wrap">
+
+            <div class="home-intro">
+                <span class="eyebrow">BSc(Hons) Computer Systems Engineering</span>
+                <h1>Amantle <span class="gradient">Mphinyane</span></h1>
+                <p>Engineer, educator and creative — building inclusive, human-centered technology
+                   for communities across Botswana and beyond.</p>
             </div>
 
-            <div class="project-content">
+            <div class="home-photo">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit orbit-three"></div>
+                <img src="images/dawnHerr.jpeg" alt="Amantle Mphinyane">
+            </div>
 
-                <h3>Educator | Teacher Aide &amp; Tutor</h3>
+            <div class="nav-cards">
 
-                <p>
+                <div class="nav-card-wrap" style="--fd:0s">
+                    <button class="nav-card" data-nav="about">
+                        <i class="ri-user-heart-line"></i>
+                        <h3>About Me</h3>
+                        <p>My story, values &amp; the Japhala project</p>
+                        <span class="nav-card-go">Enter <i class="ri-arrow-right-up-line"></i></span>
+                    </button>
+                </div>
 
-                    At Dawnbell Academy I supported student learning through personalized
-                    instruction and practical academic assistance across multiple subjects,
-                    designing engaging lesson plans to simplify complex concepts and
-                    contributing to a structured, well-organized classroom environment.
+                <div class="nav-card-wrap" style="--fd:.5s">
+                    <button class="nav-card" data-nav="portfolio">
+                        <i class="ri-layout-grid-line"></i>
+                        <h3>Portfolio</h3>
+                        <p>A 3D gallery of projects I've built</p>
+                        <span class="nav-card-go">Enter <i class="ri-arrow-right-up-line"></i></span>
+                    </button>
+                </div>
 
-                </p>
-
-                <div class="tags">
-
-                    <span>Teaching</span>
-                    <span>Special Needs</span>
-                    <span>Mentoring</span>
-
+                <div class="nav-card-wrap" style="--fd:1s">
+                    <button class="nav-card" data-nav="impact">
+                        <i class="ri-hand-heart-line"></i>
+                        <h3>Volunteering &amp; Mentoring</h3>
+                        <p>Where I give back &amp; grow others</p>
+                        <span class="nav-card-go">Enter <i class="ri-arrow-right-up-line"></i></span>
+                    </button>
                 </div>
 
             </div>
 
-        </article>
-
-        <article class="project glass">
-
-            <div class="project-image">
-
-                <img src="images/des1.jpeg" alt="Creative design work">
-
-            </div>
-
-            <div class="project-content">
-
-                <h3>Creative Designer</h3>
-
-                <p>
-
-                    Self-taught creative designer specializing in impactful visual content,
-                    including posters, event cards, digital graphics, and promotional
-                    materials, with additional skill in video editing and visual storytelling.
-
-                </p>
-
-                <div class="tags">
-
-                    <span>Graphic Design</span>
-                    <span>Branding</span>
-                    <span>Video Editing</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <article class="project glass">
-
-            <div class="project-image">
-
-                <img src="images/absa1.jpeg" alt="Web and mobile development work">
-
-            </div>
-
-            <div class="project-content">
-
-                <h3>Web &amp; Mobile Developer</h3>
-
-                <p>
-
-                    Using skills gained as a Computer Systems Engineering student at
-                    Botswana School of Business Sciences, I build responsive, modern web
-                    and mobile applications with clean, maintainable code. In 2025 my
-                    teammate and I placed second at the GirlCode Hackathon, themed
-                    "Future Proofing Africa: Innovation at the intersection of FinTech,
-                    Cybersecurity, and AI."
-
-                </p>
-
-                <div class="tags">
-
-                    <span>Web Dev</span>
-                    <span>Mobile</span>
-                    <span>Hackathons</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <article class="project glass">
-
-            <div class="project-image">
-
-                <img src="images/spec1.png" alt="Data infrastructure internship">
-
-            </div>
-
-            <div class="project-content">
-
-                <h3>Data Infrastructure Intern</h3>
-
-                <p>
-
-                    At Spectrum Analytics I learned to operate NetApp technologies to
-                    support the design and optimization of scalable data infrastructure,
-                    assisting with database backups, indexing, and query optimization to
-                    enhance system performance, integrity, and security.
-
-                </p>
-
-                <div class="tags">
-
-                    <span>NetApp</span>
-                    <span>Databases</span>
-                    <span>Infrastructure</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <article class="project glass">
-
-            <div class="project-image">
-
-                <img src="images/thrive2.jpeg" alt="Volunteer work at Thrive Nurture and Play">
-
-            </div>
-
-            <div class="project-content">
-
-                <h3>Volunteer, Thrive; Nurture &amp; Play</h3>
-
-                <p>
-
-                    Supporting children living with cancer and other serious illnesses by
-                    preparing play boxes and facilitating engaging, high-quality activities
-                    that bring comfort and joy during challenging times.
-
-                </p>
-
-                <div class="tags">
-
-                    <span>Community</span>
-                    <span>Mentorship</span>
-                    <span>Social Impact</span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </div>
-
-</section>
-
-<!-- =============================================
-CONTACT
-============================================== -->
-
-<section id="contact" class="contact">
-
-    <div class="section-title">
-
-        <span>LET'S CONNECT</span>
-
-        <h2>Start a Conversation</h2>
-
-    </div>
-
-    <div class="contact-wrapper">
-
-        <div class="contact-info">
-
-            <div class="glass info-card">
-
-                <i class="ri-mail-line"></i>
-
-                <h3>Let's Connect</h3>
-
-                <p>
-
-                    I'm always open to discussing new opportunities, collaborations,
-                    or simply connecting with fellow professionals. Reach out through
-                    the form and I'll get back to you as soon as possible.
-
-                </p>
-
-            </div>
-
-            <div class="glass info-card">
-
-                <i class="ri-global-line"></i>
-
-                <h3>Availability</h3>
-
-                <p>
-
-                    Based in Botswana. Open to remote &amp; local opportunities.
-
-                </p>
-
-            </div>
-
-            <div class="glass info-card">
-
-                <i class="ri-file-list-3-line"></i>
-
-                <h3>Available Documents</h3>
-
-                <p>
-
-                    Select the documents you'd like to request using the checkboxes
-                    in the form. All requests are handled professionally and securely.
-
-                </p>
-
-            </div>
-
-        </div>
-
-        <form class="glass contact-form" action="https://formspree.io/f/mojnpdyr" method="POST">
-
-            <input type="text" name="name" placeholder="Your Full Name" required>
-
-            <input type="email" name="email" placeholder="Email Address" required>
-
-            <input type="text" name="company" placeholder="Company / Organization">
-
-            <div class="doc-request">
-
-                <span class="doc-request-label">Documents Requested</span>
-
-                <div class="doc-checkboxes">
-
-                    <label class="doc-checkbox">
-                        <input type="checkbox" name="doc_cv" value="CV">
-                        <span>CV / Resume</span>
-                    </label>
-
-                    <label class="doc-checkbox">
-                        <input type="checkbox" name="doc_certificates" value="Certificates">
-                        <span>Certificates</span>
-                    </label>
-
-                    <label class="doc-checkbox">
-                        <input type="checkbox" name="doc_academic" value="Academic Records">
-                        <span>Academic Records</span>
-                    </label>
-
-                    <label class="doc-checkbox">
-                        <input type="checkbox" name="doc_portfolio" value="Portfolio Samples">
-                        <span>Portfolio Samples</span>
-                    </label>
-
-                </div>
-
-            </div>
-
-            <textarea name="message" rows="6"
-            placeholder="Tell me about your inquiry or opportunity..." required></textarea>
-
-            <button type="submit">
-
-                <span class="btn-text">Send Message</span>
-
+            <button class="home-contact-link" data-nav="contact">
+                Or just say hello <i class="ri-arrow-right-line"></i>
             </button>
 
-            <div class="form-message" id="form-message"></div>
+        </div>
+    </section>
 
-        </form>
+    <!-- ============ ABOUT ============ -->
+    <section class="view" data-view="about" id="view-about">
+        <div class="view-scroll">
 
-    </div>
+            <button class="back-btn" data-nav="home"><i class="ri-arrow-left-line"></i> Home</button>
 
-</section>
+            <div class="section-title">
+                <span>About Me</span>
+                <h2>Digital Bio</h2>
+            </div>
 
-<!-- =============================================
-FOOTER
-============================================== -->
+            <div class="about-grid">
 
-<footer class="footer">
+                <aside class="about-side">
 
-    <div class="footer-logo">
+                    <div class="about-image glass">
+                        <img src="images/profile.jpeg" alt="Amantle Mphinyane">
+                    </div>
 
-        AM
+                    <div class="fun-badges">
+                        <div class="fun-badge glass" style="--delay:0s"><i class="ri-hearts-line fun-badge-icon"></i><span>Faith-driven</span></div>
+                        <div class="fun-badge glass" style="--delay:.4s"><i class="ri-palette-line fun-badge-icon"></i><span>Artist at heart</span></div>
+                        <div class="fun-badge glass" style="--delay:.8s"><i class="ri-graduation-cap-line fun-badge-icon"></i><span>First Class Honours</span></div>
+                        <div class="fun-badge glass" style="--delay:1.2s"><i class="ri-group-line fun-badge-icon"></i><span>Inclusion advocate</span></div>
+                        <div class="fun-badge glass" style="--delay:1.6s"><i class="ri-user-star-line fun-badge-icon"></i><span>Loves teaching</span></div>
+                        <div class="fun-badge glass" style="--delay:2s"><i class="ri-rocket-2-line fun-badge-icon"></i><span>Always building</span></div>
+                    </div>
 
-    </div>
+                    <div class="mini-skills glass">
+                        <h4>Core Skills</h4>
+                        <div class="chip-row">
+                            <span>Web &amp; Mobile Dev</span>
+                            <span>Data Management</span>
+                            <span>Cloud &amp; Infrastructure</span>
+                            <span>Graphic Design</span>
+                            <span>Fine Art &amp; UI/UX</span>
+                            <span>Education &amp; Tutoring</span>
+                        </div>
+                    </div>
 
-    <p>
+                    <div class="mini-exp glass">
+                        <h4>Experience</h4>
+                        <div class="mini-exp-item">
+                            <i class="ri-book-open-line"></i>
+                            <div><strong>Dawnbell Academy</strong><span>Educator | Teacher Aide &amp; Tutor</span></div>
+                        </div>
+                        <div class="mini-exp-item">
+                            <i class="ri-cloud-line"></i>
+                            <div><strong>Spectrum Analytics</strong><span>Data Infrastructure Intern</span></div>
+                        </div>
+                    </div>
 
-        Designed & Developed by
-        <strong>Amantle Mphinyane</strong>
+                </aside>
 
-    </p>
+                <div class="about-text">
 
-    <span>
+                    <div class="intro-text glass">
 
-        © <span id="current-year">2026</span> All Rights Reserved
+                        <p>I'm a technology professional who builds digital solutions that are practical, inclusive
+                           and meaningful — across software, data, infrastructure and education, wherever technology
+                           can solve real problems and create opportunity. With a background in Computer Systems
+                           Engineering, I love working at the intersection of technology and people, especially
+                           making learning more accessible and helping young people build digital skills.</p>
 
-    </span>
+                        <p>My Christian faith quietly grounds how I show up for others — in service, integrity and
+                           compassion — and the belief that everyone deserves to be seen, respected and given the
+                           chance to thrive. Community, creativity and continuous learning matter to me just as much
+                           as the code I write. That belief is exactly why I'm building a passion project close to
+                           my heart.</p>
 
-</footer>
+                    </div>
+
+                    <div class="japhala-card glass">
+
+                        <span class="eyebrow">Passion Project</span>
+                        <h3>JAPHALA — Inclusive Learning Through Technology</h3>
+
+                        <p class="proverb">"Botlhale jwa phala bo tswa phalaneng"</p>
+
+                        <p>Japhala is an inclusive educational technology project designed to empower young
+                           learners with different abilities by making learning, communication and participation
+                           more accessible. Inspired by the Setswana saying above, Japhala represents the idea
+                           that knowledge and potential develop through nurturing, community, and shared learning.
+                           The project uses technology to remove barriers rather than define limitations — giving
+                           every child a meaningful way to learn, express themselves, and participate.</p>
+
+                        <blockquote>
+                            This project is deeply personal to me because my nephew has ADHD. He doesn't talk
+                            much, and he can be hyperactive — yet he navigates tech devices with ease, no help
+                            needed. It made me ask a bigger question: are the devices and platforms we build
+                            actually designed for him? Technology should adapt to a child, not a child adapting
+                            to technology.
+                        </blockquote>
+
+                        <div class="nephew-gallery">
+                            <img src="images/mark.png" alt="Amantle's nephew, Mark">
+                            <img src="images/mark2.png" alt="Amantle's nephew, Mark">
+                            <img src="images/mark3.png" alt="Amantle's nephew, Mark">
+                        </div>
+                        <p class="nephew-caption">Mark — the inspiration behind Japhala</p>
+
+                        <p class="japhala-tagline">JAPHALA — Every child has the potential to learn, grow, and be heard.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============ PORTFOLIO ============ -->
+    <section class="view" data-view="portfolio" id="view-portfolio">
+        <div class="view-scroll">
+
+            <button class="back-btn" data-nav="home"><i class="ri-arrow-left-line"></i> Home</button>
+
+            <div class="section-title">
+                <span>My Work</span>
+                <h2>Portfolio Gallery</h2>
+                <p class="section-sub">A 3D spatial carousel of projects I've engineered — drag the dots or arrows to look around.</p>
+            </div>
+
+            <div class="carousel-stage">
+                <div class="carousel" id="carousel"></div>
+            </div>
+
+            <div class="carousel-controls">
+                <button id="prevProj" aria-label="Previous project"><i class="ri-arrow-left-s-line"></i></button>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <button id="nextProj" aria-label="Next project"><i class="ri-arrow-right-s-line"></i></button>
+            </div>
+
+            <div class="project-detail glass" id="projectDetail"></div>
+
+        </div>
+    </section>
+
+    <!-- ============ IMPACT / VOLUNTEERING ============ -->
+    <section class="view" data-view="impact" id="view-impact">
+        <div class="view-scroll">
+
+            <button class="back-btn" data-nav="home"><i class="ri-arrow-left-line"></i> Home</button>
+
+            <div class="section-title">
+                <span>Giving Back</span>
+                <h2>Volunteering &amp; Mentoring</h2>
+                <p class="section-sub">Everything kids and educating — this is where I spend my heart.</p>
+            </div>
+
+            <div class="impact-grid">
+
+                <div class="impact-card glass">
+                    <div class="impact-image"><img src="images/thrive2.jpeg" alt="Thrive; Nurture and Play"></div>
+                    <div class="impact-body">
+                        <i class="ri-heart-pulse-line"></i>
+                        <h3>Thrive; Nurture &amp; Play</h3>
+                        <span class="impact-role">Volunteer</span>
+                        <p>Supporting children living with cancer and other serious illnesses by preparing play
+                           boxes and facilitating engaging activities that bring comfort and joy.</p>
+                    </div>
+                </div>
+
+                <div class="impact-card glass">
+                    <div class="impact-image"><img src="images/thrive2.jpeg" alt="Private tutoring"></div>
+
+                    <div class="impact-body">
+                        <i class="ri-book-open-line"></i>
+                        <h3>Private Tutor</h3>
+                        <span class="impact-role">Ongoing</span>
+                        <p>One-on-one academic support across subjects, adapting teaching style to each learner's
+                           pace, strengths and needs.</p>
+                    </div>
+                </div>
+
+                <div class="impact-card glass">
+                    <div class="impact-image"><img src="images/mentor2.jpeg" alt="Community mentoring with kids programs"></div>
+
+                    <div class="impact-body">
+                        <i class="ri-parent-line"></i>
+                        <h3>Community Mentor</h3>
+                        <span class="impact-role">Kids Programs</span>
+                        <p>Casual mentoring with children's programs — encouraging curiosity, confidence, and a
+                           lifelong love of learning.</p>
+                    </div>
+                </div>
+
+                <div class="impact-card glass">
+                    <div class="impact-image"><img src="images/mentor.png" alt="GirlCode Hackathon at ABSA"></div>
+                    <div class="impact-body">
+                        <i class="ri-team-line"></i>
+                        <h3>GirlCode Hackathon — ABSA</h3>
+                        <span class="impact-role">Mentor, 2026</span>
+                        <p>Mentored teams of young women through Africa's FinTech, cybersecurity &amp; AI
+                           hackathon, guiding technical decisions and problem framing.</p>
+                    </div>
+                </div>
+
+                <div class="impact-card glass">
+                    <div class="impact-image"><img src="images/absa1.jpeg" alt="GirlCode Hackathon 2025"></div>
+                    <div class="impact-body">
+                        <i class="ri-trophy-line"></i>
+                        <h3>GirlCode Hackathon 2025</h3>
+                        <span class="impact-role">Competitor — 2nd Place</span>
+                        <p>Competed under "Future Proofing Africa: Innovation at the intersection of FinTech,
+                           Cybersecurity and AI," placing 2nd overall with a teammate.</p>
+                    </div>
+                </div>
+
+                <div class="impact-card glass">
+                    <div class="impact-image"><img src="images/mentor3.jpeg" alt="Hibiscus Make-a-thon, Gaborone"></div>
+
+                    <div class="impact-body">
+                        <i class="ri-vip-crown-2-line"></i>
+                        <h3>Hibiscus Make-a-thon</h3>
+                        <span class="impact-role">VIP Guest — Gaborone</span>
+                        <p>Attended as a VIP guest celebrating grassroots innovation and maker culture in
+                           Gaborone.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="view" data-view="contact" id="view-contact">
+        <div class="view-scroll">
+
+            <button class="back-btn" data-nav="home"><i class="ri-arrow-left-line"></i> Home</button>
+
+            <div class="section-title">
+                <span>Let's Connect</span>
+                <h2>Start a Conversation</h2>
+            </div>
+
+            <div class="contact-wrapper">
+
+                <div class="contact-info">
+                    <div class="glass info-card">
+                        <i class="ri-mail-line"></i>
+                        <h3>Let's Connect</h3>
+                        <p>I'm always open to discussing new opportunities, collaborations, or simply connecting
+                           with fellow professionals. Reach out and I'll get back to you soon.</p>
+                    </div>
+                    <div class="glass info-card">
+                        <i class="ri-global-line"></i>
+                        <h3>Availability</h3>
+                        <p>Based in Botswana. Open to remote &amp; local opportunities.</p>
+                    </div>
+                    <div class="glass info-card">
+                        <i class="ri-file-list-3-line"></i>
+                        <h3>Available Documents</h3>
+                        <p>Select the documents you'd like to request using the checkboxes in the form.</p>
+                    </div>
+                </div>
+
+                <form class="glass contact-form" action="https://formspree.io/f/mojnpdyr" method="POST">
+
+                    <input type="text" name="name" placeholder="Your Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <input type="text" name="company" placeholder="Company / Organization">
+
+                    <div class="doc-request">
+                        <span class="doc-request-label">Documents Requested</span>
+                        <div class="doc-checkboxes">
+                            <label class="doc-checkbox"><input type="checkbox" name="doc_cv" value="CV"><span>CV / Resume</span></label>
+                            <label class="doc-checkbox"><input type="checkbox" name="doc_certificates" value="Certificates"><span>Certificates</span></label>
+                            <label class="doc-checkbox"><input type="checkbox" name="doc_academic" value="Academic Records"><span>Academic Records</span></label>
+                            <label class="doc-checkbox"><input type="checkbox" name="doc_portfolio" value="Portfolio Samples"><span>Portfolio Samples</span></label>
+                        </div>
+                    </div>
+
+                    <textarea name="message" rows="6" placeholder="Tell me about your inquiry or opportunity..." required></textarea>
+
+                    <button type="submit"><span class="btn-text">Send Message</span></button>
+
+                    <div class="form-message" id="form-message"></div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<div class="corner-credit">
+    <strong>Amantle Mphinyane</strong> · © <span id="current-year">2026</span>
+</div>
 
 <!--==============================
 Scripts
 ===============================-->
-
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <script src="js/threeScene.js"></script>
-
 <script src="js/main.js"></script>
 
 </body>
