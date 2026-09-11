@@ -19,8 +19,8 @@ ROOT VARIABLES — AURORA NEBULA THEME
     --accent-2:#5eead4;
 
     --white:#f6f2ff;
-    --text:#c9c2e6;
-    --muted:#8f87ad;
+    --text:#d8d2ef;
+    --muted:#b3abd4;
 
     --shadow:0 25px 70px rgba(20,8,45,.5);
     --blur:28px;
@@ -546,18 +546,38 @@ ABOUT VIEW
 
 .intro-text p:last-child{ margin-bottom:0; }
 
-.japhala-card{ padding:34px; margin-top:24px; }
+.lesale-card{ padding:34px; margin-top:24px; }
 
-.japhala-card h3{ color:var(--white); font-size:1.4rem; margin:10px 0 16px; }
+.lesale-card h3{ color:var(--white); font-size:1.4rem; margin:10px 0 4px; }
+
+.lesale-header-row{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:2px; }
+
+.est-badge{
+    padding:5px 12px;
+    border-radius:999px;
+    background:rgba(94,234,212,.12);
+    border:1px solid rgba(94,234,212,.3);
+    color:var(--accent-2);
+    font-size:.7rem;
+    letter-spacing:.5px;
+    white-space:nowrap;
+}
 
 .proverb{
     font-style:italic;
     color:var(--accent-2);
     font-size:1.05rem;
+    margin-bottom:6px !important;
+}
+
+.proverb-translation{
+    color:var(--muted);
+    font-size:.85rem;
+    font-style:italic;
     margin-bottom:16px !important;
 }
 
-.japhala-card blockquote{
+.lesale-card blockquote{
     border-left:3px solid var(--accent);
     padding:14px 20px;
     margin:20px 0;
@@ -593,11 +613,147 @@ ABOUT VIEW
     margin-bottom:20px !important;
 }
 
-.japhala-tagline{
+.lesale-tagline{
     color:var(--white) !important;
     font-weight:600;
     font-size:1.05rem;
     margin-bottom:0 !important;
+}
+
+.lesale-subhead{
+    color:var(--white);
+    font-size:1.05rem;
+    margin:36px 0 14px !important;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.lesale-subhead::before{
+    content:'';
+    width:22px;
+    height:2px;
+    flex-shrink:0;
+    background:linear-gradient(90deg,var(--accent),var(--secondary));
+    border-radius:2px;
+}
+
+.problem-list{
+    list-style:none;
+    display:grid;
+    gap:10px;
+    margin:14px 0 20px;
+}
+
+.problem-list li{
+    position:relative;
+    padding-left:20px;
+    color:var(--muted);
+    line-height:1.6;
+    font-size:.92rem;
+}
+
+.problem-list li::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:9px;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--accent);
+}
+
+.approach-quotes{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:16px 0 20px;
+}
+
+.approach-quotes p{
+    margin:0 !important;
+    padding:12px 18px;
+    border-radius:14px;
+    font-size:.9rem;
+    line-height:1.6;
+}
+
+.approach-quotes .not-this{
+    background:rgba(255,255,255,.03);
+    color:var(--muted);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.approach-quotes .but-this{
+    background:rgba(139,92,246,.12);
+    color:var(--text);
+    border:1px solid rgba(139,92,246,.3);
+}
+
+.mapping-list{
+    display:grid;
+    gap:8px;
+    margin:16px 0 20px;
+}
+
+.mapping-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    font-size:.85rem;
+    padding:10px 14px;
+    border-radius:12px;
+    background:rgba(255,255,255,.03);
+}
+
+.mapping-row .need{ color:var(--white); font-weight:600; min-width:150px; }
+
+.mapping-row .arrow{ color:var(--accent); }
+
+.mapping-row .response{ color:var(--muted); }
+
+.vision-mission-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin:18px 0 20px;
+}
+
+.vm-card{
+    padding:20px;
+    border-radius:16px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.vm-card span{
+    color:var(--accent-2);
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    display:block;
+    margin-bottom:8px;
+}
+
+.vm-card p{ color:var(--text); font-size:.9rem; line-height:1.6; margin:0 !important; }
+
+.pull-quote{
+    font-size:1.15rem;
+    color:var(--white);
+    text-align:center;
+    line-height:1.6;
+    font-weight:600;
+    margin:32px 0 24px !important;
+    padding:26px 10px;
+    border-top:1px solid rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+@media(max-width:600px){
+    .vision-mission-grid{ grid-template-columns:1fr; }
+    .mapping-row .need{ min-width:0; }
 }
 
 /* ==========================================
