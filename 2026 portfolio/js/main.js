@@ -108,17 +108,18 @@ function initializeRouter() {
         if (typeof gsap !== "undefined") {
 
             gsap.to(from, {
-                duration: .45,
+                duration: .7,
                 opacity: 0,
-                scale: .94,
-                rotateY: -12,
-                ease: "power2.in",
+                y: -36,
+                scale: .97,
+                filter: "blur(14px)",
+                ease: "power2.inOut",
                 onComplete: () => {
                     from.classList.remove("active");
                     to.classList.add("active");
                     gsap.fromTo(to,
-                        { opacity: 0, scale: .94, rotateY: 12 },
-                        { opacity: 1, scale: 1, rotateY: 0, duration: .6, ease: "power3.out" }
+                        { opacity: 0, y: 36, scale: .97, filter: "blur(14px)" },
+                        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 1.1, ease: "expo.out" }
                     );
                 }
             });

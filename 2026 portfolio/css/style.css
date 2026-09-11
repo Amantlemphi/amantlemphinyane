@@ -1,31 +1,31 @@
 /* ==========================================
-ROOT VARIABLES — NAVY BLUE THEME
+ROOT VARIABLES — AURORA NEBULA THEME
 ========================================== */
 
 :root{
-    --bg:#040a1a;
-    --bg-alt:#081128;
-    --navy-deep:#0a1633;
-    --navy:#0f2557;
-    --navy-light:#16336e;
+    --bg:#07040f;
+    --bg-alt:#0c0620;
+    --navy-deep:#150a2e;
+    --navy:#1e0f3d;
+    --navy-light:#2a1454;
 
-    --glass:rgba(255,255,255,.045);
-    --glass-border:rgba(255,255,255,.1);
-    --glass-strong:rgba(14,26,64,.6);
+    --glass:rgba(255,255,255,.035);
+    --glass-border:rgba(255,255,255,.09);
+    --glass-strong:rgba(30,15,61,.55);
 
-    --primary:#2f6fed;
-    --secondary:#1b3a8a;
-    --accent:#38d9ff;
-    --accent-2:#7dd3fc;
+    --primary:#8b5cf6;
+    --secondary:#5b21b6;
+    --accent:#f472b6;
+    --accent-2:#5eead4;
 
-    --white:#f4f7ff;
-    --text:#c7d2f0;
-    --muted:#7f8bb3;
+    --white:#f6f2ff;
+    --text:#c9c2e6;
+    --muted:#8f87ad;
 
-    --shadow:0 20px 60px rgba(2,6,20,.55);
-    --blur:22px;
+    --shadow:0 25px 70px rgba(20,8,45,.5);
+    --blur:28px;
     --radius:26px;
-    --transition:.4s ease;
+    --transition:.6s cubic-bezier(.22,1,.36,1);
 }
 
 /* ==========================================
@@ -66,7 +66,7 @@ THREE JS CANVAS + ABSTRACT ART OVERLAY
     z-index:-1;
     pointer-events:none;
     overflow:hidden;
-    background:rgba(4,9,20,.5);
+    background:rgba(7,4,15,.48);
 }
 
 .paint-overlay::before,
@@ -76,16 +76,16 @@ THREE JS CANVAS + ABSTRACT ART OVERLAY
     width:900px;
     height:900px;
     border-radius:50%;
-    filter:blur(140px);
+    filter:blur(150px);
     mix-blend-mode:screen;
-    opacity:.55;
+    opacity:.5;
 }
 
 .paint-overlay::before{
     top:-300px;
     right:-250px;
-    background:radial-gradient(circle,rgba(47,111,237,.5),transparent 70%);
-    animation:glow1 14s ease-in-out infinite;
+    background:radial-gradient(circle,rgba(139,92,246,.5),transparent 70%);
+    animation:glow1 18s ease-in-out infinite;
 }
 
 .paint-overlay::after{
@@ -93,8 +93,8 @@ THREE JS CANVAS + ABSTRACT ART OVERLAY
     left:-250px;
     width:750px;
     height:750px;
-    background:radial-gradient(circle,rgba(56,217,255,.35),transparent 70%);
-    animation:glow2 16s ease-in-out infinite;
+    background:radial-gradient(circle,rgba(244,114,182,.32),transparent 70%);
+    animation:glow2 20s ease-in-out infinite;
 }
 
 /* ==========================================
@@ -466,8 +466,8 @@ HOME VIEW
 }
 
 .nav-card:hover{
-    border-color:rgba(56,217,255,.4);
-    box-shadow:0 20px 60px rgba(56,217,255,.2);
+    border-color:rgba(244,114,182,.35);
+    box-shadow:0 20px 60px rgba(139,92,246,.25);
 }
 
 .home-contact-link{
@@ -826,7 +826,7 @@ CONTACT VIEW
 
 .form-message.show{ display:block; }
 
-.form-message.success{ background:rgba(56,217,255,.12); color:var(--accent); border:1px solid rgba(56,217,255,.3); }
+.form-message.success{ background:rgba(94,234,212,.12); color:var(--accent-2); border:1px solid rgba(94,234,212,.3); }
 
 .form-message.error{ background:rgba(255,77,109,.12); color:#ff4d6d; border:1px solid rgba(255,77,109,.3); }
 
